@@ -129,8 +129,8 @@ const HomePage = () => {
               </Checkbox>
             ))}
           </div>
-          {/* price filter */}
-          <h4 className="text-center mt-4">Filter By Price</h4>
+          {/*  district */}
+          <h4 className="text-center mt-4">Filter By district</h4>
           <div className="d-flex flex-column">
             <Radio.Group onChange={(e) => setRadio(e.target.value)}>
               {Prices?.map((p) => (
