@@ -5,18 +5,17 @@ import toast from "react-hot-toast";
 import axios from "axios";
 import { Select } from "antd";
 import { useNavigate, useParams } from "react-router-dom";
+import { Prices } from "./../../components/Prices";
 const { Option } = Select;
 
 const UpdateProduct = () => {
   const navigate = useNavigate();
   const params = useParams();
   const [categories, setCategories] = useState([]);
-  const [districts, setDistricts] = useState([]);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
   const [category, setCategory] = useState("");
-  const [district, setDistrict] = useState("");
   const [quantity, setQuantity] = useState("");
   const [shipping, setShipping] = useState("");
   const [photo, setPhoto] = useState("");
@@ -36,7 +35,6 @@ const UpdateProduct = () => {
       setQuantity(data.product.quantity);
       setShipping(data.product.shipping);
       setCategory(data.product.category._id);
-      setDistrict(data.product.district._id);
     } catch (error) {
       console.log(error);
     }
@@ -63,23 +61,6 @@ const UpdateProduct = () => {
     getAllCategory();
   }, []);
 
-  // get all dist
-  const getAllDistrict = async () => {
-    try {
-      const { data } = await axios.get("/api/v1/district/get-district");
-      if (data?.success) {
-        setDistricts(data?.district);
-      }
-    } catch (error) {
-      console.log(error);
-      toast.error("Something wwent wrong in getting district");
-    }
-  };
-
-  useEffect(() => {
-    getAllDistrict();
-  }, []);
-
   //create product function
   const handleUpdate = async (e) => {
     e.preventDefault();
@@ -91,7 +72,7 @@ const UpdateProduct = () => {
       productData.append("quantity", quantity);
       photo && productData.append("photo", photo);
       productData.append("category", category);
-      productData.append("district", district);
+
       const { data } = axios.put(
         `/api/v1/product/update-product/${id}`,
         productData
@@ -202,15 +183,23 @@ const UpdateProduct = () => {
                 />
               </div>
 
-              <div className="mb-3">
-                <input
-                  type="number"
-                  value={price}
-                  placeholder="write a Price"
-                  className="form-control"
-                  onChange={(e) => setPrice(e.target.value)}
-                />
-              </div>
+              <Select
+                bordered={false}
+                placeholder="Select a district"
+                size="large"
+                showSearch
+                className="form-select mb-3"
+                onChange={(value) => {
+                  setPrice(value);
+                }}
+              >
+                {Prices?.map((c) => (
+                  <Option key={c._id} value={c._id}>
+                    {c.name}
+                  </Option>
+                ))}
+              </Select>
+
               <div className="mb-3">
                 <input
                   type="number"
