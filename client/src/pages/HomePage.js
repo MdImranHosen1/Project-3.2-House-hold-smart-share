@@ -129,8 +129,8 @@ const HomePage = () => {
               </Checkbox>
             ))}
           </div>
-          {/* price filter */}
-          <h4 className="text-center mt-4">Filter By Price</h4>
+          {/*  district */}
+          <h4 className="text-center mt-4">Filter By district</h4>
           <div className="d-flex flex-column">
             <Radio.Group onChange={(e) => setRadio(e.target.value)}>
               {Prices?.map((p) => (
@@ -163,10 +163,10 @@ const HomePage = () => {
                   <div className="card-name-price">
                     <h5 className="card-title">{p.name}</h5>
                     <h5 className="card-title card-price">
-                      {p.price.toLocaleString("en-US", {
+                      {/* {p.price.toLocaleString("en-US", {
                         style: "currency",
                         currency: "BDT",
-                      })}
+                      })} */}
                     </h5>
                   </div>
                   <p className="card-text ">
